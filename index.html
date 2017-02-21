@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Protein Viewer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<script src="lib/three.js"></script>
+		<script src="script/pdb_parse.js"></script>
+		<script src="script/view.js"></script>
+        <script src="script/BallAndStick.js"></script>
+        <script src="script/controller.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="script/constant.js"></script>
+		<script src="script/structure.js"></script>
+		<script src="script/geometry.js"></script>
+
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="leftMenu" style="background-color: DimGray" >
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-default" type="button" id="pdb-button">Get</button></span>
+						<input type="text" class="form-control" name="pdb-id" placeholder="PDB ID" value="1l2y" id="pdb-id" />
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					<div class="row" id="viewport" style="background-color: black">
+					</div>
+					<div class="row" id="informationMenu" style="background-color: DimGray">
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="rightMenu" style="background-color: DimGray ">
+				</div>
+			</div>
+		</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+            $("#pdb-button").click(function(){
+				url = 'https://files.rcsb.org/download/' + $('#pdb-id').val() + '.pdb';
+				$('#informationMenu').text('Loading from ' + url + ' ...');
+				$.get( url, function( data ) {
+					document.getElementById("informationMenu").innerHTML = "";
+                    var controller = new Controller('viewport',data);
+
+                });
+			});
+		});
+
+	</script>
+	</body>
+</html>

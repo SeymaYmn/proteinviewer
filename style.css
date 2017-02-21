@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+}
+#leftMenu{
+    height: 100vh;
+}
+
+#viewport{
+    height: 80vh;
+    overflow: hidden;
+}
+
+#informationMenu{
+    height: 20vh;
+    overflow: scroll;
+}
+
+#rightMenu{
+    height: 100vh;
+}
+.glyphicon {
+    margin-right:10px;
+}
+.panel-body {
+    padding:0px;
+}
+.panel-body table tr td {
+    padding-left: 15px
+}
+.panel-body .table {
+    margin-bottom: 0px;
+}
+button{
+    margin-top: 5px;
+}
+input{
+    margin-top: 5px;
+}
+#accordion{
+    margin-top: 5px;
+}
