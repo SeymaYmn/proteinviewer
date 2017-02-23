@@ -12,6 +12,10 @@ Vector.prototype.sub = function ( vA ) {
     return new Vector (this.x - vA.x, this.y - vA.y, this.z - vA.z )
 };
 
+Vector.prototype.div = function (num) {
+    return new Vector(this.x/num, this.y/num, this.z/num);
+};
+
 Vector.prototype.distance = function ( vA ) {
     return  this.sub(vA).scalar()
 };
@@ -52,11 +56,6 @@ AtomStructure.prototype.getId = function () {
 AtomStructure.prototype.distance = function ( atomA ) {
     return this.coor.distance ( atomA.coor )
 };
-/*
-AtomStructure.prototype.toString = function () {
-    return (this.atomSerialNumber + " " + this.getAtomName() + " " + this.coor)
-}
-*/
 
 function ResidueStructure(resName, resSeqNum, atoms) {
     this.resName = resName;
@@ -93,24 +92,3 @@ ChainStructure.prototype.push = function (residue) {
     this.residues.push(residue);
     this.length += 1;
 };
-
-/*
- ChainStructure.defineProperty(ChainStructure.prototype, 'length', {get: function() {
- return this.residues.length;
- }});
-
- /*
-
- ResidueStructure.prototype.getResidueName = function () {
- return this.resName;
- };
-
- ResidueStructure.prototype.getResidueId = function () {
- return this.resSeqNum;
- };
-
- ResidueStructure.prototype.getResidueColor = function () {
- var name = this.resName;
- return ResidueColor[name];
- };
- */

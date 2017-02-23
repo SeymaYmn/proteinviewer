@@ -11,7 +11,7 @@ function View(viewArea) {
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 75, viewportWidth / viewportHeight, 0.1, 1000 );
-    camera.position.set(100,100,100);
+    camera.position.set(10,10,10);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     var light = new THREE.PointLight(0xffffff);

@@ -1,20 +1,18 @@
 function Controller(viewArea, data) {
 
-    var protein = dataParse(data);
-    for(var i=0;i<protein.length;i++){
-        console.log(protein.residues[i].atoms);
-        for(var j=0;j<protein.residues[i].length;j++){
-            console.log(protein.residues[i].atoms[j].name);
-
-        }
-    }
+    var protein = centeredCoor(dataParse(data));
     var view = new View(viewArea);
     this.view = view;
-
-    console.log( protein.residues[0].atoms[0].getColor() );
-
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(
+        new THREE.Vector3( -10, 0, 0 ),
+        new THREE.Vector3( 0, 10, 0 ),
+        new THREE.Vector3( 10, 0, 0 )
+    );
     var shape = new Shape();
-    view.addElementToScene(shape.addSphere(protein.residues[0].atoms[0].coor));
+    view.addElementToScene(shape.sphere(protein.residues[0].atoms[0]));
+    view.addElementToScene(shape.line(geometry));
+
     view.render();
     view.animate();
 }
