@@ -23,10 +23,29 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="leftMenu" style="background-color: DimGray" >
-					<div class="input-group">
-						<span class="input-group-btn"><button class="btn btn-default" type="button" id="pdb-button">Get</button></span>
-						<input type="text" class="form-control" name="pdb-id" placeholder="PDB ID" value="1l2y" id="pdb-id" />
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"
+				     id="leftMenu" style="background-color: DimGray">
+					<div>
+
+						<div class="form-group margin">
+							<label class="col-sm-5 col-md-5 col-lg-5" >Load File</label>
+							<div class="col-sm-7 col-md-7 col-lg-7">
+								<select class="form-control placeholder" onchange="Selecting.call(this, event)">
+									<option value="" disabled selected> Select your option </option>
+									<option value="1">From server</option>
+									<option value="2">From disk</option>
+								</select>
+							</div>
+							<br>
+							<br>
+
+
+							<div id="selectionMenu">
+							</div>
+						</div>
+						<br>
+
+
 					</div>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -36,23 +55,180 @@
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="rightMenu" style="background-color: DimGray ">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-menu-hamburger">
+                    </span>Selections</a>
+								</h4>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+									<table class="table">
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Atom Name</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Residue Name</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Backbone</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Side Chain</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Atom Number</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-menu-hamburger">
+                    </span>Representation</a>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+									<table class="table">
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a onclick="controller != null && controller.BallAndStick();">Ball and Stick</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a onclick="controller != null && controller.CA();">Backbone</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-menu-hamburger">
+                    </span>Coloring</a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+									<table class="table">
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Atom Name</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Residue Name</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">pH</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Hydropathy</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Polarity</a>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<span class="glyphicon text-primary"></span><a href="#">Side Chain Class</a>
+											</td>
+										</tr>
+
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
 				</div>
 			</div>
 		</div>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-            $("#pdb-button").click(function(){
-				url = 'https://files.rcsb.org/download/' + $('#pdb-id').val() + '.pdb';
-				$('#informationMenu').text('Loading from ' + url + ' ...');
-				$.get( url, function( data ) {
-					document.getElementById("informationMenu").innerHTML = "";
-                    var controller = new Controller('viewport',data);
 
-                });
+		function Selecting(event) {
+			if(this.selectedIndex == 0){
+				return;
+			}
+
+			if(this.selectedIndex == 1){
+				document.getElementById('selectionMenu').innerHTML = "";
+				document.getElementById('selectionMenu').innerHTML = '<span><b>Pdb id:</b> <input type="text" name="pdb-id" placeholder="PDB ID" value="1l2y" id="pdb-id" onkeypress="return getPdb1(event);"/><button type="button" id="enterpdb" onclick="getPdb()">Get</button></span>\r\n';
+			}
+
+			if(this.selectedIndex == 2){
+				document.getElementById('selectionMenu').innerHTML = "";
+				document.getElementById('selectionMenu').innerHTML = '<input type="file" id="fileInput">';
+				var fileInput = document.getElementById('fileInput');
+
+
+				fileInput.addEventListener('change', function(e) {
+					var file = fileInput.files[0];
+					var fileType = /pdb.*/;
+
+					if (file.type.match(fileType)) {
+						var reader = new FileReader();
+						$('#informationMenu').text('Loading file ...');
+
+						reader.onload = function(e) {
+							document.getElementById("informationMenu").innerHTML = "";
+
+							var controller = new Controller('viewport','informationMenu', reader.result);
+						};
+
+						reader.readAsText(file);
+					} else {
+						alert ("File not supported!");
+					}
+				});
+			}
+		}
+
+		function getPdb1(event) {
+			if(event.keyCode == 13){
+				document.getElementById("enterpdb").onclick();
+				return false;
+			}
+			return true;
+		}
+        var controller = null;
+		function getPdb() {
+			var url = 'https://files.rcsb.org/download/' + $('#pdb-id').val() + '.pdb';
+			$('#informationMenu').text('Loading from ' + url + ' ...');
+			$.get( url, function( data ) {
+				document.getElementById("informationMenu").innerHTML = "";
+				controller = new Controller('viewport','informationMenu', data);
+
 			});
-		});
-
+		}
 	</script>
 	</body>
 </html>
